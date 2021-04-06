@@ -1,0 +1,8 @@
+{
+  "firebase": {
+    "serverKey": "FCM-SERVER-KEY"
+  },
+  "sentry": {
+    "dsn": "SENTRY-DSN"
+  }
+}
