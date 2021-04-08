@@ -121,7 +121,13 @@ export async function addFriend(uid, friendUid) {
     .update({
       friends: firestore.FieldValue.arrayUnion(uid),
     });
-  await addActivity(uid, friendUid, 'Accepted make friends', {}, true);
+  await addActivity(
+    uid,
+    friendUid,
+    'Accepted make friends',
+    {type: 'update-user'},
+    true,
+  );
   return true;
 }
 

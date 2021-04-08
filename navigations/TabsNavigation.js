@@ -1,19 +1,19 @@
-import React, {useEffect} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import firestore from '@react-native-firebase/firestore';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React, {useEffect} from 'react';
+import {AppState} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import HomeScreen from '../screens/HomeScreen';
-import SearchScreen from '../screens/SearchScreen';
+import {useDispatch, useSelector} from 'react-redux';
+import {updateActivities, updateConversations} from '../redux/notiSlider';
+import {removeActivity} from '../repositories/activity';
+import {getUser, setUserStatus, updateFCMTokens} from '../repositories/user';
 import ActivityScreen from '../screens/ActivityScreen';
 import ConversationScreen from '../screens/ConversationScreen';
+import HomeScreen from '../screens/HomeScreen';
+import SearchScreen from '../screens/SearchScreen';
 import SettingScreen from '../screens/SettingScreen';
-import {useDispatch, useSelector} from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getUser, setUserStatus, updateFCMTokens} from '../repositories/user';
-import {removeActivity} from '../repositories/activity';
 import * as NotificationService from '../services/notification';
-import firestore from '@react-native-firebase/firestore';
-import {updateActivities, updateConversations} from '../redux/notiSlider';
-import {AppState} from 'react-native';
 
 const Tabs = createBottomTabNavigator();
 
@@ -42,6 +42,12 @@ export default function TabsNavigation({navigation}) {
         ) {
           await removeActivity(activity.id);
           return;
+        }
+
+        switch (activity) {
+          case 'update-user':
+            dispatch(setUser(await getUser(user?.uid)));
+            break;
         }
 
         NotificationService.pushLocalNotification(
@@ -120,12 +126,7 @@ export default function TabsNavigation({navigation}) {
       activity = JSON.parse(activity);
     }
     if (activity) {
-      await NotificationService.onHandleActivity(
-        activity,
-        navigation,
-        user,
-        dispatch,
-      );
+      await NotificationService.onHandleActivity(activity, navigation, user);
     }
   }
 

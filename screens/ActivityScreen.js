@@ -46,7 +46,7 @@ export default function ActivityScreen({navigation}) {
       <ActivityItem
         onDelete={() => onDeleteItem(item)}
         data={item}
-        onRead={() => onHandleActivity(item, navigation, user, dispatch)}
+        onRead={() => onHandleActivity(item, navigation, user)}
       />
     );
   }

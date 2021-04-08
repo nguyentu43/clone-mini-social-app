@@ -189,7 +189,6 @@ export default function ProfileModal({route, navigation}) {
 
   async function onPressFriendButton() {
     if (isFriend) {
-      console.log('unfriends');
       await unFriend(user.uid, profile.uid);
       dispatch(
         setUser({

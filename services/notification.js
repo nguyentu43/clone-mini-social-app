@@ -56,7 +56,7 @@ export async function pushRemoteNotification(tokens, message, data) {
   }
 }
 
-export async function onHandleActivity(item, navigation, user, dispatch) {
+export async function onHandleActivity(item, navigation, user) {
   await setReadActivity(item.id);
   switch (item.data.type) {
     case 'post':
@@ -73,9 +73,6 @@ export async function onHandleActivity(item, navigation, user, dispatch) {
         'Do you want to accept?',
         async () => {
           await addFriend(user.uid, item.source.uid);
-          dispatch(
-            setUser({...user, friends: user.friends.concat(item.source.uid)}),
-          );
           Alert.alert(
             'Make friends',
             item.source.displayName + ' has a friend',
