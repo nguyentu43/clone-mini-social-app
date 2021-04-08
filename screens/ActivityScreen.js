@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {FlatList} from 'react-native';
 import {Text, View} from 'react-native-ui-lib';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import ActivityItem from '../components/ActivityItem';
 import {getAllActivities, removeActivity} from '../repositories/activity';
 import {onHandleActivity} from '../services/notification';
@@ -13,6 +13,7 @@ export default function ActivityScreen({navigation}) {
   const user = useSelector(state => state.user);
   const [refreshing, setRefreshing] = useState(false);
   const [fetching, setFetching] = useState(false);
+  const dispatch = useDispatch();
 
   async function fetchData() {
     setRefreshing(true);
@@ -45,7 +46,7 @@ export default function ActivityScreen({navigation}) {
       <ActivityItem
         onDelete={() => onDeleteItem(item)}
         data={item}
-        onRead={() => onHandleActivity(item, navigation, user)}
+        onRead={() => onHandleActivity(item, navigation, user, dispatch)}
       />
     );
   }

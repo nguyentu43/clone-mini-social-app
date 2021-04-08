@@ -5,6 +5,7 @@ import {showAlertConfirm} from '../utils/alert';
 import {addFriend} from '../repositories/user';
 import {getConversation} from '../repositories/chat';
 import {firebase} from '../configs.json';
+import {setUser} from '../redux/userSlider';
 
 export function pushLocalNotification(channelId, message, data = {}) {
   PushNotification.localNotification({
@@ -55,7 +56,7 @@ export async function pushRemoteNotification(tokens, message, data) {
   }
 }
 
-export async function onHandleActivity(item, navigation, user) {
+export async function onHandleActivity(item, navigation, user, dispatch) {
   await setReadActivity(item.id);
   switch (item.data.type) {
     case 'post':
@@ -71,7 +72,10 @@ export async function onHandleActivity(item, navigation, user) {
         'Request make friends',
         'Do you want to accept?',
         async () => {
-          await addFriend(user?.uid, item.source.uid);
+          await addFriend(user.uid, item.source.uid);
+          dispatch(
+            setUser({...user, friends: user.friends.concat(item.source.uid)}),
+          );
           Alert.alert(
             'Make friends',
             item.source.displayName + ' has a friend',

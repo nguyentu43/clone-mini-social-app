@@ -120,7 +120,12 @@ export default function TabsNavigation({navigation}) {
       activity = JSON.parse(activity);
     }
     if (activity) {
-      await NotificationService.onHandleActivity(activity, navigation, user);
+      await NotificationService.onHandleActivity(
+        activity,
+        navigation,
+        user,
+        dispatch,
+      );
     }
   }
 

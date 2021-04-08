@@ -188,7 +188,7 @@ export async function addComment(post, uid, content) {
     await addActivity(
       uid,
       target.uid,
-      'Leave a comment your post: ' + content,
+      'Leave a comment in your post: ' + content,
       {type: 'post', id: post.id},
       true,
     );

@@ -39,10 +39,8 @@ export async function createUser({displayName, photoURL, uid, email}) {
 
 export async function updateUser({displayName, photo, uid, email}) {
   const docRef = firestore().collection('users').doc(uid);
-  await docRef.set({displayName, photo, email});
-  const photoURL = await storage().ref(uid).child(photo).getDownloadURL();
-  const user = {displayName, photo, photoURL, email, uid};
-  return user;
+  await docRef.update({displayName, photo, email});
+  return await getUser(uid);
 }
 
 export async function searchUsers(keyword) {

@@ -1,13 +1,13 @@
+import _ from 'lodash';
 import React, {useEffect, useState} from 'react';
-import {View, Colors} from 'react-native-ui-lib';
+import {TouchableOpacity} from 'react-native';
+import {Colors, View} from 'react-native-ui-lib';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import AvatarList from '../components/AvatarList';
 import PostList from '../components/PostList';
-import {getAllUsers} from '../repositories/user';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {TouchableOpacity} from 'react-native';
-import _ from 'lodash';
 import {getAllPostsByF} from '../repositories/post';
+import {getAllUsers} from '../repositories/user';
 
 export default function HomeScreen({navigation}) {
   const [posts, setPosts] = useState(null);
@@ -16,10 +16,11 @@ export default function HomeScreen({navigation}) {
   const [refreshing, setRefreshing] = useState(false);
   const [lastPostList, setLastPostList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const limit = 10;
+  const limit = 15;
 
   async function fetchData() {
     setRefreshing(true);
+
     const friendChunks = _.chunk([user?.uid].concat(user?.friends), 5);
     const lastList = [];
     const result = await getAllPostsByF(friendChunks, limit, lastList);

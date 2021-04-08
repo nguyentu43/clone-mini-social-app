@@ -182,10 +182,21 @@ export default function ProfileModal({route, navigation}) {
     setVisibleImageView(false);
   }
 
+  async function syncUserInfo() {
+    dispatch(setUser(await getUser(user.uid)));
+    Alert.alert('Sync info', 'Sync info has completed');
+  }
+
   async function onPressFriendButton() {
     if (isFriend) {
+      console.log('unfriends');
       await unFriend(user.uid, profile.uid);
-      setUser({...user, friends: friends.filter(f => f.id !== profile.uid)});
+      dispatch(
+        setUser({
+          ...user,
+          friends: user.friends.filter(f => f !== profile.uid),
+        }),
+      );
     } else {
       await requestAddFriend(user.uid, profile.uid);
       Alert.alert('Send request', 'Have sent make friends');
@@ -226,6 +237,14 @@ export default function ProfileModal({route, navigation}) {
                 </Text>
                 {isOwner && <Ionicons name="create-outline" size={20} />}
               </TouchableOpacity>
+              {isOwner && (
+                <Button
+                  onPress={syncUserInfo}
+                  marginV-10
+                  label="Sync user info"
+                  size={Button.sizes.medium}
+                />
+              )}
               {!isOwner &&
                 (isFriend ? (
                   <Button
