@@ -8,10 +8,10 @@ const slider = createSlice({
   },
   reducers: {
     updateActivities(state, action) {
-      return {...state, activities: action.payload};
+      state.activities = action.payload;
     },
     updateConversations(state, action) {
-      return {...state, conversations: action.payload};
+      state.conversations = action.payload;
     },
   },
 });
