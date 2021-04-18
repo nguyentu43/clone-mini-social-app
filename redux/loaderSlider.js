@@ -8,10 +8,11 @@ const slice = createSlice({
   },
   reducers: {
     showLoading(state, action) {
-      return {...state, show: true, message: action.payload};
+      state.show = true;
+      state.message = action.payload;
     },
     hideLoading(state, action) {
-      return {...state, show: false};
+      state.show = false;
     },
   },
 });
