@@ -8,7 +8,7 @@ const slider = createSlice({
   },
   reducers: {
     setRouteState(state, action) {
-      return action.payload;
+      state = action.payload;
     },
   },
 });
