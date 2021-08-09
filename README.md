@@ -10,4 +10,4 @@
 
 ## Screenshot
 
-![screenshot](https://raw.githubusercontent.com/nguyentu43/clone-mini-social-app/master/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/nguyentu43/clone-mini-social-app/master/screenshot.jpg)
